@@ -1,32 +1,55 @@
 
 package com.unpri.charactermanager;
 
-import com.unpri.charactermanager.controller.CharacterController;
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterManager;
 import com.unpri.charactermanager.model.CharacterType;
+import com.unpri.charactermanager.controller.CharacterController;
 import com.unpri.charactermanager.view.MainWindow;
 
 import javax.swing.SwingUtilities;
 
 public class Main {
+
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(() -> {
 
+            // Membuat pengelola karakter
             CharacterManager manager = new CharacterManager();
 
-            manager.addCharacter(new Character("Aragorn", CharacterType.WARRIOR, 5));
-            manager.addCharacter(new Character("Gandalf", CharacterType.MAGE, 3));
-            manager.addCharacter(new Character("Legolas", CharacterType.ARCHER, 4));
-            manager.addCharacter(new Character("Evelyn", CharacterType.HEALER, 6));
-            manager.addCharacter(new Character("Alucard", CharacterType.MAGE, 10));
+            // Menambahkan 6 karakter
+            manager.add(new Character(
+                    "Arjuna", CharacterType.WARRIOR, 5
+            ));
 
+            manager.add(new Character(
+                    "Merlin", CharacterType.MAGE, 3
+            ));
+
+            manager.add(new Character(
+                    "Athena", CharacterType.ARCHER, 4
+            ));
+
+            manager.add(new Character(
+                    "Hercules", CharacterType.WARRIOR, 7
+            ));
+
+            manager.add(new Character(
+                    "Luna", CharacterType.HEALER, 6
+            ));
+
+            manager.add(new Character(
+                    "Orion", CharacterType.ARCHER, 2
+            ));
+
+            // Membuat Controller
             CharacterController controller =
                     new CharacterController(manager);
 
-            MainWindow view = new MainWindow(controller);
-
-            view.setVisible(true);
+            // Membuat dan menampilkan View
+            MainWindow window = new MainWindow(controller);
+            window.setVisible(true);
         });
     }
 }

@@ -1,34 +1,78 @@
+
 package com.unpri.charactermanager.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterManager {
-    private List<Character> characterList;
 
-    public CharacterManager() {
-        this.characterList = new ArrayList<>();
-    }
+    private final List<Character> characters =
+            new ArrayList<>();
 
-    public void addCharacter(Character character) {
-        characterList.add(character);
-    }
+    // Menambahkan karakter
+    public boolean add(Character character) {
 
-    // Pastikan method ini ada agar error hilang
-    public List<Character> getCharacterList() {
-        return characterList;
-    }
-
-    public int getTotalCharacters() {
-        return characterList.size();
-    }
-
-    public double getAverageLevel() {
-        if (characterList.isEmpty()) return 0.0;
-        int sum = 0;
-        for (Character c : characterList) {
-            sum += c.getLevel();
+        if (character == null) {
+            return false;
         }
-        return (double) sum / characterList.size();
+
+        if (characters.contains(character)) {
+            return false;
+        }
+
+        characters.add(character);
+        return true;
+    }
+
+    // Mencari karakter berdasarkan nama
+    public Character findByName(String name) {
+
+        for (Character character : characters) {
+
+            if (character.getName().equalsIgnoreCase(name)) {
+                return character;
+            }
+        }
+
+        return null;
+    }
+
+    // Menghapus karakter berdasarkan nama
+    public boolean remove(String name) {
+
+        Character character = findByName(name);
+
+        if (character == null) {
+            return false;
+        }
+
+        characters.remove(character);
+        return true;
+    }
+
+    // Menghitung total karakter
+    public int getTotal() {
+        return characters.size();
+    }
+
+    // Mengambil semua karakter
+    public List<Character> getAll() {
+        return new ArrayList<>(characters);
+    }
+
+    // Menghitung rata-rata level
+    public double getAverageLevel() {
+
+        if (characters.isEmpty()) {
+            return 0.0;
+        }
+
+        int totalLevel = 0;
+
+        for (Character character : characters) {
+            totalLevel += character.getLevel();
+        }
+
+        return (double) totalLevel / characters.size();
     }
 }

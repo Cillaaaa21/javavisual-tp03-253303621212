@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CharacterController {
 
-    private CharacterManager manager;
+    private final CharacterManager manager;
 
     public CharacterController(CharacterManager manager) {
         this.manager = manager;
@@ -17,15 +17,15 @@ public class CharacterController {
 
     public void addCharacter(String name, CharacterType type, int level) {
         Character newChar = new Character(name, type, level);
-        manager.addCharacter(newChar);
+        manager.add(newChar);
     }
 
     public List<Character> getAllCharacters() {
-        return manager.getCharacterList();
+        return manager.getAll();
     }
 
     public int getTotalCharacters() {
-        return manager.getTotalCharacters();
+        return manager.getTotal();
     }
 
     public double getAverageLevel() {

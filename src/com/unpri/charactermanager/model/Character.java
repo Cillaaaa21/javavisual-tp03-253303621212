@@ -1,14 +1,10 @@
 
 package com.unpri.charactermanager.model;
 
-/**
- * Merepresentasikan satu karakter dalam aplikasi Character Manager.
- * Menerapkan encapsulation melalui atribut private.
- */
+import java.util.Objects;
+
 public class Character {
 
-    // Atribut private
-    private int id;
     private String name;
     private CharacterType type;
     private int level;
@@ -16,62 +12,17 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    // Menghitung jumlah objek Character yang telah dibuat.
-    private static int totalCharacterCreated = 0;
-
-    // Constructor untuk membuat karakter baru
+    // Constructor utama
     public Character(String name, CharacterType type, int level) {
+
         this.name = name;
         this.type = type;
-
-        if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level minimal adalah 1"
-            );
-        }
-
-        this.level = level;
-        this.hitPoints = calculateBaseHP();
-        this.attackPower = calculateBaseAttack();
         this.mana = 0;
 
-        totalCharacterCreated++;
-    }
-
-    // Constructor untuk memuat karakter dari database
-    public Character(int id, String name, CharacterType type,
-                     int level, int hitPoints, int attackPower) {
-        if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level minimal adalah 1"
-            );
-        }
-
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.level = level;
-        this.hitPoints = hitPoints;
-        this.attackPower = attackPower;
-        this.mana = 0;
-
-        totalCharacterCreated++;
-    }
-
-    // Helper private
-    private int calculateBaseHP() {
-        return 100 + (level * 10);
-    }
-
-    private int calculateBaseAttack() {
-        return 10 + (level * 5);
+        setLevel(level);
     }
 
     // Getter
-    public int getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -96,50 +47,46 @@ public class Character {
         return mana;
     }
 
-    public static int getTotalCharacterCreated() {
-        return totalCharacterCreated;
+    // Setter
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // Setter
-    public void setId(int id) {
-        this.id = id;
+    public void setType(CharacterType type) {
+        this.type = type;
     }
 
     public void setLevel(int level) {
+
         if (level < 1) {
             throw new IllegalArgumentException(
-                    "Level minimal adalah 1"
-            );
+                    "Level harus minimal 1");
         }
 
         this.level = level;
-        this.hitPoints = calculateBaseHP();
-        this.attackPower = calculateBaseAttack();
+        this.hitPoints = 100 + (level * 10);
+        this.attackPower = 20 + (level * 5);
     }
 
     public void setMana(int mana) {
+
         if (mana < 0) {
             throw new IllegalArgumentException(
-                    "Mana tidak boleh negatif"
-            );
+                    "Mana tidak boleh negatif");
         }
 
         this.mana = mana;
     }
 
-    // Memeriksa status hidup karakter
-    public boolean isAlive() {
-        return hitPoints > 0;
-    }
-
     // Membandingkan karakter berdasarkan nama
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
 
-        if (obj == null || getClass() != obj.getClass()) {
+        if (!(obj instanceof Character)) {
             return false;
         }
 
@@ -150,26 +97,9 @@ public class Character {
                 && name.equalsIgnoreCase(other.name);
     }
 
-    // Harus konsisten dengan equals()
     @Override
     public int hashCode() {
-        return name == null
-                ? 0
-                : name.toLowerCase(
-                        java.util.Locale.ROOT
-                  ).hashCode();
-    }
-
-    // Menampilkan informasi karakter
-    @Override
-    public String toString() {
-        return "Character{id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                ", level=" + level +
-                ", hp=" + hitPoints +
-                ", atk=" + attackPower +
-                ", mana=" + mana +
-                '}';
+        return Objects.hash(
+                name == null ? null : name.toLowerCase());
     }
 }
