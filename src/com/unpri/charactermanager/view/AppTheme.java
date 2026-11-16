@@ -1,3 +1,4 @@
+
 package com.unpri.charactermanager.view;
 
 import com.unpri.charactermanager.model.CharacterType;

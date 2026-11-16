@@ -177,4 +177,113 @@ Hasil pemeriksaan digunakan untuk memastikan tidak ada perubahan pada file Model
 
 Link Google Docs: https://1drv.ms/w/c/711877E32029CA45/IQATJ1L9Sk71RJ08X56HP-_pAZVtmInJs3_DcKY6pZhvxqU?e=28qSEB
 
+## TP12 — Layout, UI Responsif & Analisis MVC
+
+### A. Implementasi Layout
+
+Pada TP12, aplikasi Character Manager dikembangkan menggunakan `BorderLayout` dengan empat wilayah utama, yaitu:
+
+- **NORTH:** Header aplikasi yang berisi judul Character Manager dan panel statistik.
+- **CENTER:** Daftar karakter yang ditampilkan dalam `JScrollPane`.
+- **EAST:** Panel legenda role yang menggunakan `BoxLayout` dengan orientasi `Y_AXIS`.
+- **SOUTH:** Status bar yang menampilkan informasi aplikasi di sebelah kiri dan versi `v0.5` di sebelah kanan.
+
+Daftar karakter menggunakan `GridLayout` dengan dua kolom. Setiap karakter ditampilkan dalam kartu yang memiliki warna berbeda berdasarkan role masing-masing.
+
+Legenda dibuat secara dinamis menggunakan `CharacterType.values()` sehingga seluruh jenis karakter dapat ditampilkan secara otomatis.
+
+### B. Wireframe Aplikasi
+
+```text
++------------------------------------------------------+
+|                    NORTH                             |
+|              CHARACTER MANAGER                       |
+|------------------------------------------------------|
+| Total Karakter | Rata-rata Level                     |
+| Level Tertinggi| Jumlah Role                          |
++-----------------------------------------+------------+
+|                  CENTER                 |    EAST    |
+|                                         |            |
+| +----------------+ +----------------+   |  LEGENDA   |
+| | Arjuna         | | Merlin         |   |            |
+| | Warrior        | | Mage           |   |  Warrior   |
+| | Level: 5       | | Level: 3       |   |  Mage      |
+| +----------------+ +----------------+   |  Archer    |
+|                                         |  Healer    |
+| +----------------+ +----------------+   |            |
+| | Athena         | | Luna           |   |            |
+| | Archer         | | Healer         |   |            |
+| +----------------+ +----------------+   |            |
+|                                         |            |
+|              JScrollPane                |            |
++-----------------------------------------+------------+
+|                  SOUTH                               |
+| Character Manager siap digunakan             v0.5    |
++------------------------------------------------------+
+```
+
+### C. Screenshot Pengujian Responsif
+
+**1. Ukuran Awal**
+
+Pada ukuran awal, seluruh komponen aplikasi dapat terlihat dengan baik, termasuk header, statistik, daftar karakter, legenda role, dan status bar.
+
+**2. Jendela Diperlebar**
+
+Ketika ukuran jendela diperlebar, kartu karakter menyesuaikan ukuran area yang tersedia. Panel legenda tetap berada di sebelah kanan dan susunan komponen tetap rapi.
+
+**3. Jendela Diperkecil**
+
+Ketika ukuran jendela diperkecil, area daftar karakter menjadi lebih sempit. JScrollPane menampilkan scrollbar sehingga pengguna tetap dapat melihat seluruh daftar karakter.
+
+### D. Tabel Pengamatan Resize
+
+| Kondisi | Prediksi | Hasil Pengamatan |
+|---|---|---|
+| Ukuran awal | Semua komponen terlihat | Sesuai |
+| Jendela diperlebar | Kartu karakter melebar mengikuti area | Sesuai |
+| Jendela diperkecil | Scrollbar membantu melihat daftar karakter | Sesuai |
+
+Berdasarkan pengujian, aplikasi dapat menyesuaikan tampilan ketika ukuran jendela berubah tanpa membuat komponen saling bertumpuk.
+
+### E. Struktur Panel Bersarang
+
+Aplikasi menggunakan `JPanel` utama dengan `BorderLayout` sebagai wadah untuk empat wilayah utama. Pada bagian NORTH, terdapat `headerPanel` yang menggunakan `BorderLayout` untuk menempatkan judul dan panel statistik. Pada bagian CENTER, `characterPanel` menampung kartu-kartu karakter dan ditempatkan di dalam `listWrapper` yang kemudian dimasukkan ke `JScrollPane`. Sementara itu, panel legenda menggunakan `BoxLayout` dan status bar menggunakan `BorderLayout` agar informasi dapat ditempatkan di kiri dan kanan.
+
+### F. Alasan Pemilihan Layout Panel Tambahan
+
+Panel tambahan yang digunakan adalah panel statistik dengan `GridLayout(2, 2, 10, 8)`.
+
+Layout GridLayout dipilih karena dapat menyusun empat informasi statistik dalam dua baris dan dua kolom dengan ukuran sel yang seragam. Susunan ini membuat informasi total karakter, rata-rata level, level tertinggi, dan jumlah role terlihat teratur.
+
+Layout yang ditolak adalah FlowLayout karena susunan komponennya mengikuti ukuran dan ruang yang tersedia secara berurutan. Untuk empat informasi statistik, GridLayout lebih sesuai karena menghasilkan susunan dua baris dan dua kolom yang konsisten.
+
+### G. Bukti Package Model Tidak Berubah
+
+Package `model` dipertahankan tanpa perubahan pada TP12.
+
+Pemeriksaan dilakukan menggunakan perintah Git berikut:
+
+```bash
+git diff HEAD -- ":(glob)**/model/**"
+```
+
+Jika tidak terdapat output, berarti tidak ada perubahan pada file model yang dilacak dibandingkan commit HEAD.
+
+### H. Teknologi yang Digunakan
+
+- Java
+- Java Swing
+- BorderLayout
+- GridLayout
+- BoxLayout
+- JScrollPane
+- MVC (Model-View-Controller)
+- Git dan GitHub
+
+### I. Google Docs — Bagian D
+
+Link Google Docs: https://1drv.ms/w/c/711877E32029CA45/IQCTH9rbrNDzTp17jIv03gjZAWFmaSafYl9qQevJ--gGLkI?e=hRLDbY
+
+
 
