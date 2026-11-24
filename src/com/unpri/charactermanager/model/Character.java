@@ -2,6 +2,7 @@
 package com.unpri.charactermanager.model;
 
 import java.util.Objects;
+import java.util.Locale;
 
 public class Character {
 
@@ -12,67 +13,112 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    // Constructor utama
+    // Konstruktor utama
     public Character(String name, CharacterType type, int level) {
 
-        this.name = name;
-        this.type = type;
-        this.mana = 0;
-
+        setName(name);
         setLevel(level);
+        setType(type);
+        setMana(0);
     }
 
-    // Getter
+    // Getter nama
     public String getName() {
         return name;
     }
 
+    // Setter nama
+    public void setName(String name) {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                "Nama karakter tidak boleh kosong!"
+            );
+        }
+
+        String cleanedName = name.trim();
+
+        if (cleanedName.length() > 20) {
+            throw new IllegalArgumentException(
+                "Nama karakter maksimal 20 karakter!"
+            );
+        }
+
+        this.name = cleanedName;
+    }
+
+    // Getter tipe karakter
     public CharacterType getType() {
         return type;
     }
 
+    // Setter tipe karakter
+    public void setType(CharacterType type) {
+
+        if (type == null) {
+            throw new IllegalArgumentException(
+                "Role karakter harus dipilih!"
+            );
+        }
+
+        if (type == CharacterType.MAGE && level > 60) {
+            throw new IllegalArgumentException(
+                "MAGE tidak boleh memiliki level di atas 60!"
+            );
+        }
+
+        this.type = type;
+    }
+
+    // Getter level
     public int getLevel() {
         return level;
     }
 
-    public int getHitPoints() {
-        return hitPoints;
-    }
-
-    public int getAttackPower() {
-        return attackPower;
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    // Setter
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(CharacterType type) {
-        this.type = type;
-    }
-
+    // Setter level
     public void setLevel(int level) {
 
-        if (level < 1) {
+        if (level < 1 || level > 99) {
             throw new IllegalArgumentException(
-                    "Level harus minimal 1");
+                "Level karakter harus antara 1 sampai 99!"
+            );
+        }
+
+        if (type == CharacterType.MAGE && level > 60) {
+            throw new IllegalArgumentException(
+                "MAGE tidak boleh memiliki level di atas 60!"
+            );
         }
 
         this.level = level;
+
+        // Perhitungan otomatis HP dan Attack Power
         this.hitPoints = 100 + (level * 10);
         this.attackPower = 20 + (level * 5);
     }
 
+    // Getter Hit Points
+    public int getHitPoints() {
+        return hitPoints;
+    }
+
+    // Getter Attack Power
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    // Getter Mana
+    public int getMana() {
+        return mana;
+    }
+
+    // Setter Mana
     public void setMana(int mana) {
 
         if (mana < 0) {
             throw new IllegalArgumentException(
-                    "Mana tidak boleh negatif");
+                "Mana tidak boleh negatif!"
+            );
         }
 
         this.mana = mana;
@@ -92,14 +138,26 @@ public class Character {
 
         Character other = (Character) obj;
 
-        return name != null
-                && other.name != null
-                && name.equalsIgnoreCase(other.name);
+        return name.equalsIgnoreCase(other.name);
     }
 
+    // HashCode berdasarkan nama
     @Override
     public int hashCode() {
-        return Objects.hash(
-                name == null ? null : name.toLowerCase());
+        return Objects.hash(name.toLowerCase(Locale.ROOT));
+    }
+
+    // Tampilan informasi karakter
+    @Override
+    public String toString() {
+
+        return "Character{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", level=" + level +
+                ", hitPoints=" + hitPoints +
+                ", attackPower=" + attackPower +
+                ", mana=" + mana +
+                '}';
     }
 }

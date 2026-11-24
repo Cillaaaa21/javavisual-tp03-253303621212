@@ -6,17 +6,16 @@ import java.util.List;
 
 public class CharacterManager {
 
-    private final List<Character> characters =
-            new ArrayList<>();
+    private final List<Character> characters = new ArrayList<>();
 
-    // Menambahkan karakter
+    // Menambahkan karakter baru
     public boolean add(Character character) {
 
         if (character == null) {
             return false;
         }
 
-        if (characters.contains(character)) {
+        if (isNameTaken(character.getName())) {
             return false;
         }
 
@@ -24,12 +23,33 @@ public class CharacterManager {
         return true;
     }
 
+    // Alias untuk kebutuhan CharacterFormPanel
+    public boolean addCharacter(Character character) {
+        return add(character);
+    }
+
+    // Memeriksa apakah nama sudah digunakan
+    public boolean isNameTaken(String name) {
+
+        if (name == null || name.trim().isEmpty()) {
+            return false;
+        }
+
+        return findByName(name.trim()) != null;
+    }
+
     // Mencari karakter berdasarkan nama
     public Character findByName(String name) {
 
+        if (name == null || name.trim().isEmpty()) {
+            return null;
+        }
+
+        String searchedName = name.trim();
+
         for (Character character : characters) {
 
-            if (character.getName().equalsIgnoreCase(name)) {
+            if (character.getName().equalsIgnoreCase(searchedName)) {
                 return character;
             }
         }
@@ -55,7 +75,7 @@ public class CharacterManager {
         return characters.size();
     }
 
-    // Mengambil semua karakter
+    // Mengambil salinan daftar karakter
     public List<Character> getAll() {
         return new ArrayList<>(characters);
     }

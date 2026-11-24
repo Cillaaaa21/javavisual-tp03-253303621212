@@ -285,5 +285,71 @@ Jika tidak terdapat output, berarti tidak ada perubahan pada file model yang dil
 
 Link Google Docs: https://1drv.ms/w/c/711877E32029CA45/IQCTH9rbrNDzTp17jIv03gjZAWFmaSafYl9qQevJ--gGLkI?e=hRLDbY
 
+# Character Manager
+
+Aplikasi Character Manager merupakan aplikasi berbasis Java Swing yang digunakan untuk mengelola data karakter, seperti nama, role, level, HP, dan attack power. Aplikasi ini dikembangkan dengan menerapkan konsep Object-Oriented Programming (OOP) dan pola arsitektur Model-View-Controller (MVC).
+
+## TP14 — Validasi Form dan Analisis MVC
+
+### A. Deskripsi
+
+Pada TP14, aplikasi Character Manager dikembangkan dengan menambahkan sistem validasi pada form input karakter. Validasi bertujuan untuk memastikan data yang dimasukkan pengguna sesuai dengan aturan sebelum karakter ditambahkan ke dalam aplikasi.
+
+Validasi diterapkan pada dua bagian, yaitu View dan Model. View bertugas memeriksa input pengguna serta menampilkan pesan kesalahan, sedangkan Model bertugas memastikan data karakter memenuhi aturan yang telah ditentukan.
+
+### B. Implementasi Validasi
+
+Aturan validasi yang diterapkan pada aplikasi Character Manager adalah:
+
+1. Nama karakter tidak boleh kosong.
+2. Nama karakter harus memiliki panjang 3–20 karakter.
+3. Nama karakter hanya boleh berisi huruf dan spasi.
+4. Nama karakter tidak boleh sama dengan karakter yang sudah terdaftar.
+5. Level karakter harus berada pada rentang 1–99.
+6. Karakter dengan role MAGE memiliki level maksimal 60.
+
+Validasi pada View dilakukan sebelum data dikirim ke Model. Jika input tidak sesuai, aplikasi menampilkan pesan kesalahan dan memberikan tanda border merah pada kolom nama. Pada Model, validasi dilakukan menggunakan `IllegalArgumentException` untuk menolak data yang tidak memenuhi ketentuan.
+
+### C. Dokumentasi Pengujian
+
+Berikut merupakan dokumentasi hasil pengujian validasi pada aplikasi Character Manager.
+
+#### 1. Pengujian Nama Kosong
+
+**Hasil:** Ketika pengguna mencoba menyimpan karakter tanpa mengisi nama, aplikasi menampilkan pesan "Nama wajib diisi!". Data karakter tidak berhasil ditambahkan.
+
+#### 2. Pengujian Nama Duplikat
+
+**Hasil:** Ketika pengguna memasukkan nama karakter yang sudah terdaftar, aplikasi menampilkan pesan "Nama sudah dipakai!". Sistem menolak penambahan karakter dengan nama yang sama.
+
+#### 3. Pengujian Berhasil Menambahkan Karakter Baru
+
+**Hasil:** Pengguna berhasil menambahkan karakter baru bernama Kagura dengan role MAGE dan level 5. Kartu Kagura muncul pada daftar karakter dan jumlah karakter bertambah dari 8 menjadi 9.
+
+### D. Tabel Pengujian Validasi
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Aktual |
+|---|---|---|---|
+| 1 | Nama dikosongkan | Muncul pesan nama wajib diisi | Berhasil, pesan kesalahan ditampilkan |
+| 2 | Memasukkan nama duplikat (Arjuna) | Muncul pesan nama sudah dipakai | Berhasil, nama duplikat ditolak |
+| 3 | Memasukkan nama terlalu pendek (Al) | Muncul pesan nama harus 3–20 karakter | Berhasil, nama ditolak |
+| 4 | Memasukkan nama dengan angka (Arjuna123) | Muncul pesan nama hanya boleh berisi huruf dan spasi | Berhasil, format nama ditolak |
+| 5 | Memasukkan nama valid (Kagura) | Karakter berhasil ditambahkan | Berhasil, kartu Kagura ditambahkan |
+| 6 | Memasukkan nama lebih dari 20 karakter | Model menolak nama tersebut | Validasi Model menolak nama yang melebihi 20 karakter |
+| 7 | Memasukkan MAGE dengan level 61 | Model menolak level tersebut | Validasi Model menolak level MAGE di atas 60 |
+| 8 | Memasukkan level di luar rentang 1–99 | Model menolak level tersebut | Validasi Model menolak level di luar rentang 1–99 |
+
+**Catatan:** Hasil pengujian menunjukkan bahwa validasi pada View memberikan umpan balik terhadap input yang tidak sesuai, sedangkan Model bertugas menjaga agar data yang disimpan tetap memenuhi aturan. Aturan pada nomor 6–8 diterapkan melalui validasi Model.
+
+### E. Analisis Kompromi Sementara MVC
+
+Pada TP14, penggunaan `ActionListener` masih dibuat secara minimal untuk menangani aksi tombol penyimpanan karakter. Pemanggilan `CharacterManager` juga masih dilakukan secara langsung dari komponen View melalui mekanisme yang digunakan saat ini. Pendekatan ini dipilih agar proses validasi dan penambahan karakter dapat berjalan tanpa mengubah terlalu banyak struktur program yang sudah ada. Pada pengembangan berikutnya, pemisahan tanggung jawab antara View, Controller, dan Model diharapkan dapat dibuat lebih baik agar penerapan pola MVC menjadi lebih terstruktur.
+
+### F. Dokumentasi Analisis Bagian D
+
+Dokumentasi analisis TP14 dibuat dalam Google Docs dan berisi pembahasan mengenai validasi input, validasi dua lapisan, penggunaan `IllegalArgumentException`, kualitas umpan balik kepada pengguna, serta penerapan pola MVC.
+
+**Link Google Docs:** https://1drv.ms/w/c/711877E32029CA45/IQCUjvfrJnshTK-Ax2XfQdn8AePfv5SYYXf_cx7dnlWDMvg?e=9wOdLc
+
 
 
